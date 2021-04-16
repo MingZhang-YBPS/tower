@@ -171,7 +171,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	u.Host = s.host
 	u.Scheme = s.scheme
 
-	if s.useBearerToken && len(s.bearerToken) > 0 {
+	if s.useBearerToken && len(s.bearerToken) > 0 && len(req.Header.Get("Authorization")) == 0 {
 		req = utilnet.CloneRequest(req)
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", s.bearerToken))
 	}
